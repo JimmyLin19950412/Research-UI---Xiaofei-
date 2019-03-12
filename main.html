@@ -1,0 +1,134 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Page Title</title>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body onresize="resizeCanvas()" onload="resizeCanvas();penWidthGetValue();nodesInNetworkGetValue();anchorsInNetworkGetValue();radioRangeGetValue();sensorFieldWidthGetValue();sensorFieldLengthGetValue();trackMouse()">
+    <!--table to hold contents-->
+    <table width="100%" height="100%">
+        <!--first row contains buttons and sliders-->
+        <tr height="5%" align="center">
+            <td>
+                <button type="button" id="penButton" onclick="toggleDrawing()">Pen</button>
+            </td>
+            <td>
+                <button type="button">HopInfo</button>
+            </td>
+            <td>
+                <button type="button">Color</button>
+            </td>
+            <td>
+                <button type="button" id="eraserButton" onclick="erase()">Eraser</button>
+            </td>
+            <td>
+                <button type="button" id="clearButton" onclick="clearCanvas();">Clear</button>
+            </td>
+            <td>
+                <button type="button" onclick="openGenerateWSNs()">Generate WSNs</button>
+            </td>
+            <td>
+                <input type="range" min="10" max="200" value ="10" class="slider" id="penWidthSlider" oninput="penWidthGetValue()">
+            </td>
+            <td>
+                <p id="penWidthValue"></p>
+            </td>
+            <td>
+                <button type="button">Debug</button>
+            </td>
+            <td>
+                <button type="button">RoutingMSG</button>
+            </td>
+            <td>
+                <button type="button">Search WSNs</button>
+            </td>
+        </tr>
+        <!--second row contains canvas-->
+        <tr>
+            <td colspan="11">
+                <canvas id="canvas" width="100%" height="100%" style="border:0.5px solid #000000" >
+                    Your browser does not support canvas.
+                </canvas>
+            </td>
+        </tr>
+    </table>
+
+    <!-- div contains Modal, popup box that opens when Generate WSNs button is clicked-->
+    <div id="generateWSNsModal" class="generateWSNsModal">
+        <div class="generateWSNsModalContent">
+            <div class="generateWSNsModalContainer">
+                <!--x button at top left hand corner for closing modal-->
+                <span onclick="closeGenerateWSNs()" class="button displayTopRight">x</span>
+                <!--table to show content of Generate WSNs-->
+                <table>
+                    <tr>
+                        <td>
+                            <p>Choose number of nodes in the network</p>
+                        </td>
+                        <td>
+                            <input type="range" min="50" max="5000" value ="1000" class="slider" id="nodesInNetworkSlider" oninput="nodesInNetworkGetValue()">
+                        </td>
+                        <td>
+                            <p id="nodesInNetworkValue"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Choose number of anchors in the network</p>
+                        </td>
+                        <td>
+                            <input type="range" min="5" max="100" value ="50" class="slider" id="anchorsInNetworkSlider" oninput="anchorsInNetworkGetValue()">
+                        </td>
+                        <td>
+                            <p id="anchorsInNetworkValue"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Choose the sensor radio range</p>
+                        </td>
+                        <td>
+                            <input type="range" min="20" max="200" value ="50" class="slider" id="radioRangeSlider" oninput="radioRangeGetValue()">
+                        </td>
+                        <td>
+                            <p id="radioRangeValue"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Choose the width of the sensor field</p>
+                        </td>
+                        <td>
+                            <input type="range" min="500" max="3000" value ="1300" class="slider" id="sensorFieldWidthSlider" oninput="sensorFieldWidthGetValue()">
+                        </td>
+                        <td>
+                            <p id="sensorFieldWidthValue"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Choose the length of the sensor field</p>
+                        </td>
+                        <td>
+                            <input type="range" min="500" max="3000" value ="700" class="slider" id="sensorFieldLengthSlider" oninput="sensorFieldLengthGetValue()">
+                        </td>
+                        <td>
+                            <p id="sensorFieldLengthValue"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center">
+                            <button type="button" onclick="resizeCanvas();resetGenerateNodes();generateNodes();placeNodesOnCanvas();createJsonNodes()">Confirm</button>
+                        </td>
+                        <td align="center">
+                            <button type="button" onclick="closeGenerateWSNs()">Cancel</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
