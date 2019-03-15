@@ -99,26 +99,14 @@ function resetGenerateNodes() {
     //reset nodesX and nodesY array
     nodesX = [];
     nodesY = [];
+    anchorNodes=[];
     //reset anchorNodes. 0 = not anchor nodes, 1 = is anchor nodes
     for(var i = 0; i < document.getElementById("anchorsInNetworkSlider").value; i++) {
         //change current position of array to 0
-        anchorNodes[i] = 0;
+        anchorNodes.push(1);
     }
     //determine anchorNodes. # of anchor nodes determined by slider in Generate WSNs
-    for(var i = 0; i < document.getElementById("anchorsInNetworkSlider").value; i++) {
-        //generate a random number from 0 to length of nodesX or nodesY
-        var ran = Math.floor(Math.random() * nodesX.length);
-            
-        //see if duplicate ran is found
-        //if position of array is not 0 then a duplicate is found
-        if(anchorNodes[i] == 0) {
-            anchorNodes[i] = 1;
-        }
-        else {
-            //reduce the value of i by 1, effectively negating the loops iteration
-            i--
-        }
-    }
+
     //reset jsonNodes
     var jsonNodes = {
         nodes: []
