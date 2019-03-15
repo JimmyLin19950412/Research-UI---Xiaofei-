@@ -125,6 +125,10 @@ function resetGenerateNodes() {
     };
 }
 
+function euDis(x1,y1,x2,y2){
+  return (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
+}
+
 //generate nodes
 function generateNodes() {
     //get # of nodes from Generate WSNs
@@ -148,7 +152,7 @@ function generateNodes() {
         var i = 0;
         for(i = 0; i < nodesX.length; i++) {
             //if position is duplicate
-            if(nodesX[i] == ranX && nodesY[i] == ranY) {
+            if(euDis(nodesX[i], nodesY[i] , ranX, ranY)<11) {
                 //break out for loop
                 break;
             }
