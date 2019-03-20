@@ -1,4 +1,4 @@
-//array that hold nodes x position, starts empty
+1//array that hold nodes x position, starts empty
 var nodesX = [];
 //array that hold nodes y position, starts empty
 var nodexY = [];
@@ -257,7 +257,6 @@ function findXY(action, e) {
                     "X" : currX,
                     "Y" : currY
                 });
-                ctx.closePath();
                 dot_flag = false;
             }
         }
@@ -265,6 +264,7 @@ function findXY(action, e) {
         //if user lifts up mouse button or leaves canvas, stop drawing
         if (action == "up" || action == "out") {
             flag = false;
+			ctx.closePath();
         }
 
         //if user moves mouse, draw lines from starting point
@@ -286,7 +286,6 @@ function draw() {
     var ctx = canvas.getContext("2d");
 
     //start drawing
-    ctx.beginPath();
     ctx.moveTo(prevX, prevY);
     ctx.lineTo(currX, currY);
     jsonDraw.draw.push({
@@ -296,8 +295,9 @@ function draw() {
     //change color of nodes to black
     ctx.fillStyle = "#000000";
     ctx.lineWidth = document.getElementById("penWidthSlider").value;
+	ctx.lineJoin = "round";
+	ctx.lineCap = "round";
     ctx.stroke();
-    ctx.closePath();
 }
 
 //erases everything in canvas then places generated nodes back on canvas

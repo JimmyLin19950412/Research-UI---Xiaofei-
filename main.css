@@ -1,3 +1,17 @@
+.wrapper {
+    display: fixed;
+}
+  
+.sidebar {
+    display: block;
+    width: 1;
+    height: 6vh;
+    position: fixed;
+    top: 0;
+    left: 20;
+	z-index: 1;
+}
+
 .button {
     border: none;
     padding: 8px 16px;
