@@ -16,7 +16,7 @@
                         <button type="button" id="penButton" onclick="toggleDrawing()">Pen</button>
                     </td>
                     <td>
-                        <button type="button">HopInfo</button>
+                        <button type="button" id="hopInfoButton" onclick="toggleHopInfoing()">HopInfo</button>
                     </td>
                     <td>
                         <button type="button">Color</button>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <!-- div contains Modal, popup box that opens when Generate WSNs button is clicked-->
+    <!-- div contains Modal, pop up box that opens when Generate WSNs button is clicked-->
     <div id="generateWSNsModal" class="generateWSNsModal">
         <div class="generateWSNsModalContent">
             <div class="generateWSNsModalContainer">
@@ -130,5 +130,8 @@
             </div>
         </div>
     </div>
+	
+	<!--popup when user clicks on a node-->
+	<div class="popup" id="popup" onclick="closePopUp()">Empty</div>
 </body>
 </html>

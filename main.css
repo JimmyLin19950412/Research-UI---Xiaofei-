@@ -61,3 +61,13 @@
 .generateWSNsModalContainer {
     padding: 0.01em 16px;
 }
+
+.popup {
+    height: 60px;
+    width: 90px;
+    border: 1px solid #000;
+    position: absolute;
+    display: none;
+    z-index: 100;
+    background-color: red;
+}

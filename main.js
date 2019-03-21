@@ -1,4 +1,4 @@
-1//array that hold nodes x position, starts empty
+//array that hold nodes x position, starts empty
 var nodesX = [];
 //array that hold nodes y position, starts empty
 var nodexY = [];
@@ -17,6 +17,9 @@ var jsonDraw = {
 
 //boolean to control if drawing is enabled. Starts false, enables when pen button is clicked
 var toggleDraw = false;
+//boolean to control if hopinfo is enabled. starts false, enables when hopinfo button is clicked
+var toggleHopInfo = false;
+
 //boolean flag determining if user is drawing. originally, false
 var flag = false;
 //previous and current positions of mouse, maintined to draw properly
@@ -45,7 +48,7 @@ function openGenerateWSNs() {
     document.getElementById("generateWSNsModal").style.display="block";
 }
 
-//closes modeal Generate WSNs
+//closes model Generate WSNs
 function closeGenerateWSNs() {
     document.getElementById("generateWSNsModal").style.display="none";
 }
@@ -64,7 +67,7 @@ function nodesInNetworkGetValue() {
 function anchorsInNetworkGetValue() {
     document.getElementById("anchorsInNetworkValue").innerHTML = document.getElementById("anchorsInNetworkSlider").value;
 }
-//get value of raidio range slider
+//get value of radio range slider
 function radioRangeGetValue() {
     document.getElementById("radioRangeValue").innerHTML = document.getElementById("radioRangeSlider").value;
 }
@@ -78,6 +81,11 @@ function sensorFieldLengthGetValue() {
     document.getElementById("sensorFieldLengthValue").innerHTML = document.getElementById("sensorFieldLengthSlider").value;
 }
 
+//closes popup
+function closePopUp() {
+    document.getElementById("popup").style.display = "none";
+}
+
 //changes toggleDraw to true or false depending on button click
 function toggleDrawing() {
     //if toggleDraw is false then changes toggleDraw to true
@@ -86,12 +94,27 @@ function toggleDrawing() {
         //change color of button to show that toggleDraw is true/on
         document.getElementById("penButton").style.background = "#FF0000";
     }
-    //if toggleDraw is not false then it is true, change toggle draw to false
+    //if toggleDraw is not false then it is true, change toggleDraw to false
     else {
         toggleDraw = false;
         //changes color of button to show that toggleDraw is false/off
         document.getElementById("penButton").removeAttribute("style");
     }
+}
+
+//changes toggleHopInfo to true or false depending on button click
+function toggleHopInfoing() {
+	//if toggleHopInfo is false then changes to true
+	if(toggleHopInfo == false) {
+		toggleHopInfo = true;
+		//change color of button to show that toggleHopInfo is true/on
+		document.getElementById("hopInfoButton").style.background = "#FF0000";
+	}
+	else {
+		toggleHopInfo = false;
+		//if toggleHopInfo is not false, then it is true, change toggleHopInfo to false
+		document.getElementById("hopInfoButton").removeAttribute("style");
+	}
 }
 
 //reset variables from generateNodes
@@ -111,6 +134,9 @@ function resetGenerateNodes() {
     var jsonNodes = {
         nodes: []
     };
+    
+    //closes popup boxes
+    document.getElementById("popup").style.display = "none";
 }
 
 function euDis(x1,y1,x2,y2){
@@ -222,6 +248,10 @@ function trackMouse() {
     }, false);
     canvas.addEventListener("mouseup", function (e) {
         findXY("up", e)
+		//if toggleHopInfo is true
+		if(toggleHopInfo == true) {
+			displayHopInfo(e);
+		}
     }, false);
     canvas.addEventListener("mouseout", function (e) {
         findXY("out", e)
@@ -320,4 +350,27 @@ function clearCanvas() {
     //resets all variables
     resetGenerateNodes();
     erase();
+}
+
+//displays hopinfo
+function displayHopInfo(e) {
+	//obtain current x and y positions of mouse
+    currX = e.clientX - canvas.getBoundingClientRect().left;
+    currY = e.clientY - canvas.getBoundingClientRect().top;
+
+	//loop through nodesX array to determine if current mouse location is a node
+	for(var i = 0; i < nodesX.length; i++) {
+		//check to see if current mouse x position is in nodesX array
+		if(currX + 1 >= nodesX[i] && currX - 1 <= nodesX[i]){
+			//check to see if current Y position is in nodesY array
+			if(currY + 1 >= nodesY[i] && currY - 1 <= nodesY[i]) {
+				//if both X and Y position of mouse is in array, then mouse is over a node
+                var popupBox = document.getElementById("popup");
+                popupBox.style.display = "block";
+                popupBox.style.top = currY;
+                popupBox.style.left = currX;
+                popupBox.innerHTML = "Node #: " + i + "<br />" + "X: " + nodesX[i] + "<br />" + "Y: " + nodesY[i];
+			}
+		}
+	}
 }
