@@ -29,6 +29,10 @@ var prevY = 0;
 var currY = 0;
 var dot_flag = false;
 
+//response from server
+var isResponse = false;
+var loading;
+
 //resizes canvas size
 function resizeCanvas() {
     /*
@@ -51,6 +55,13 @@ function openGenerateWSNs() {
 //closes model Generate WSNs
 function closeGenerateWSNs() {
     document.getElementById("generateWSNsModal").style.display="none";
+}
+
+//closes loading bar modal
+function closeLoadingBar() {
+  document.getElementById("loadingBarModal").style.display="none";
+  clearInterval(loading);
+  
 }
 
 //get value of penWidth
@@ -373,4 +384,41 @@ function displayHopInfo(e) {
 			}
 		}
 	}
+}
+
+//displays loading bar and wait to receive data from server
+function waitForResponseFromServer() {
+    document.getElementById("loadingBarModal").style.display="block";
+    //progress bar variables
+    var loadingBar = document.getElementById("loadingBar");
+    var progressBar = document.getElementById("progressBar");
+    //timer is 2min, 120,000ms = 2min
+    const timer = 120000;
+    //reset isResponse
+    isResponse = false;
+    var loadingBarPercent = 1;
+    //temp count
+    var count = 0;
+    loadingBar.style.display = "block";
+    progressBar.style.display = "block";
+    
+    loading = setInterval(updateLoadingBar , 100);
+    
+    function updateLoadingBar() {
+        if(loadingBarPercent >= 100 || isResponse == true) {
+            clearInterval(loading);
+            loadingBar.style.width = 100 + '%';
+            if(isResponse == true) {
+                document.getElementById("loadingBarMessage").innerHTML = "Received data from server. Please close window";
+            }
+            else {
+                document.getElementById("loadingBarMessage").innerHTML = "Unable to receive response from server. Please try again";
+            }
+        }
+        else {
+            loadingBarPercent = loadingBarPercent + 0.08333;
+            loadingBar.style.width = loadingBarPercent + '%';
+            //code to receive response from server placed here
+        }
+    }
 }

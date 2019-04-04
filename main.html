@@ -40,7 +40,7 @@
                         <button type="button">Debug</button>
                     </td>
                     <td>
-                        <button type="button">RoutingMSG</button>
+                        <button type="button" onclick="waitForResponseFromServer()">RoutingMSG</button>
                     </td>
                     <td>
                         <button type="button">Search WSNs</button>
@@ -131,6 +131,22 @@
         </div>
     </div>
 	
+        <!-- div contains Modal, pop up box that opens when Generate WSNs button is clicked-->
+    <div id="loadingBarModal" class="loadingBarModal">
+        <div class="loadingBarModalContent">
+            <div class="loadingBarModalContainer">
+                <!--x button at top left hand corner for closing modal-->
+                <span onclick="closeLoadingBar()" class="button displayTopRight">x</span>
+                <!--loading bar displaying the status of server response-->
+                <div class="progressBar" id="progressBar">
+                    <div class="loadingBar" id="loadingBar"></div>
+                </div>
+                <br /><br />
+                <p id="loadingBarMessage">Waiting for server to respond</p>
+            </div>
+        </div>
+    </div>
+    
 	<!--popup when user clicks on a node-->
 	<div class="popup" id="popup" onclick="closePopUp()">Empty</div>
 </body>
