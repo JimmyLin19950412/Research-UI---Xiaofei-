@@ -7,9 +7,11 @@ var anchorNodes = [];
 
 //JSON object holding nodes info
 var jsonNodes = {
-    nodes: []
+        range: 0,
+        total: 0,
+        anchor: 0,
+        nodes: []
 };
-
 //JSON object holding drawing info
 var jsonDraw = {
     draw: []
@@ -225,7 +227,9 @@ function placeNodesOnCanvas() {
 
 //creates json with node information
 function createJsonNodes() {
+    jsonNodes.range=document.getElementById("radioRangeSlider").value;
     //loops through nodesX / nodesY
+    var counter=0;
     for(var i = 0; i < nodesX.length; i++) {
         //variable containing data if current node is an anchor, default is false.
         var isAnchor = false;
@@ -234,17 +238,18 @@ function createJsonNodes() {
         if(anchorNodes[i] == 1) {
             //current node is anchor
             isAnchor = true;
+            counter+=1;
         }
 
         //push data into jsonNodes
-        jsonNodes.nodes.push({
-            "NodeID" : i++,
-            "X" : nodesX[i],
-            "Y" : nodesY[i],
-            "IsAnchor" : isAnchor
-        });
+        jsonNodes.nodes.push( parseInt(nodesX[i]));
+        jsonNodes.nodes.push( parseInt(nodesY[i]));
     }
+    
+    jsonNodes.total=nodesX.length;
+    jsonNodes.anchor=counter;
 }
+
 
 //tracks mouse movement
 function trackMouse() {
@@ -421,4 +426,59 @@ function waitForResponseFromServer() {
             //code to receive response from server placed here
         }
     }
+}
+
+
+
+function randomTest(){
+  erase();
+  var c1,c2,h1,h2,d;
+  var dis;
+  do
+  {
+    c1=Math.floor(Math.random() * jsonNodes.anchor); 
+    c2=0;
+    do{
+      c2=Math.floor(Math.random() * jsonNodes.anchor);
+    }while(c2==c1);
+    
+    h1=Math.floor(Math.random() * 10)+3;
+    h2=0;
+    do{
+      h2=Math.floor(Math.random() * 10)+3;
+    }while(h2==h1); 
+    
+    d=Math.floor(Math.random() * 50)+30;
+    dis=(nodesX[c1]-nodesX[c2])*(nodesX[c1]-nodesX[c2])+(nodesY[c1]-nodesY[c2])*(nodesY[c1]-nodesY[c2]);
+  }while(dis>(h1+h2)*(h1+h2)*d*d)
+  console.log(c1+' '+c2+ ' ' +h1+' '+h2);
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
+  ctx.stroke(); 
+  ctx.beginPath();
+  ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
+  ctx.stroke(); 
+  ctx.beginPath();
+  ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
+  ctx.stroke(); 
+  var i,j;
+  var ccc=0;
+  for(i=0;i<2000;i++)
+  {
+    for(j=0;j<2000;j++)
+    {
+      if(pDis(i,j,nodesX[c2],nodesY[c2])<h2*h2*d*d && pDis(i,j,nodesX[c1],nodesY[c1])<h1*h1*d*d && pDis(i,j,nodesX[c1],nodesY[c1])>(h1-1)*(h1-1)*d*d)
+        ccc+=1;
+      
+    }
+  }
+  
+  console.log(ccc);
+}
+
+function pDis(x1,y1,x2,y2)
+{
+  return (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
 }
