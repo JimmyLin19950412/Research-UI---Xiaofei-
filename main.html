@@ -43,7 +43,7 @@
                         <button type="button" onclick="waitForResponseFromServer()">RoutingMSG</button>
                     </td>
                     <td>
-                        <button type="button">Search WSNs</button>
+                        <button type="button" onclick="searchWSNs('start')">Search WSNs</button>
                     </td>
                 </tr>
             </table>
@@ -131,7 +131,7 @@
         </div>
     </div>
 	
-        <!-- div contains Modal, pop up box that opens when Generate WSNs button is clicked-->
+        <!-- div contains Modal, pop up box that opens when RoutingMSG button is clicked-->
     <div id="loadingBarModal" class="loadingBarModal">
         <div class="loadingBarModalContent">
             <div class="loadingBarModalContainer">
@@ -143,6 +143,53 @@
                 </div>
                 <br /><br />
                 <p id="loadingBarMessage">Waiting for server to respond</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- div contains Modal, pop up box that opens when Search WSNs button is clicked-->
+    <div id="searchingWSNsModal" class="searchingWSNsModal">
+        <div class="searchingWSNsModalContent">
+            <div class="searchingWSNsModalContainer">
+                <!--x button at top left hand corner for closing modal-->
+                <span onclick="closeSearchingWSNs()" class="button displayTopRight">x</span>
+                <!--text field with a max length of 30 characters -->
+                <table align="center">
+                    <tr>
+                        <td colspan="4">
+                            <input type="text" style="height:100px;width:430px;font-size:16pt;" maxlength="30" id="message" name="message" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">
+                            <button type="button" style="border-radius:50%;font-size:20pt" onclick="searchWSNs('left')"><--</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" onclick="displayCurrentArea()">Display <br /> Current <br /> Area</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" onclick="showAllArea()">Show <br /> All <br /> Area</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" style="border-radius:50%;font-size:20pt" onclick="searchWSNs('right')">--></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">
+                            <button type="button" onclick="unknownOne()">unkownOne</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" onclick="unknownTwo()">unkownTwo</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" onclick="unknownThree()">unkownThree</button>
+                        </td>
+                        <td style="text-align:center">
+                            <button type="button" onclick="unknownFour()">unkownFour</button>
+                        </td>
+                    </tr>
+                </table>
+                
             </div>
         </div>
     </div>

@@ -5,6 +5,11 @@ var nodexY = [];
 //array that hold anchor node positions. 0 = not anchor nodes, 1 = is anchor nodes
 var anchorNodes = [];
 
+//array holding information to be displayed in text box
+var information = new Array(25);
+//contains the position of array that is shown in text field
+var currTextFieldPos = 0;
+
 //JSON object holding nodes info
 var jsonNodes = {
         range: 0,
@@ -51,19 +56,24 @@ function resizeCanvas() {
 
 //opens modal Generate WSNs
 function openGenerateWSNs() {
-    document.getElementById("generateWSNsModal").style.display="block";
+    document.getElementById("generateWSNsModal").style.display = "block";
 }
 
 //closes model Generate WSNs
 function closeGenerateWSNs() {
-    document.getElementById("generateWSNsModal").style.display="none";
+    document.getElementById("generateWSNsModal").style.display = "none";
 }
 
 //closes loading bar modal
 function closeLoadingBar() {
-  document.getElementById("loadingBarModal").style.display="none";
+  document.getElementById("loadingBarModal").style.display = "none";
   clearInterval(loading);
   
+}
+
+//closes searching WSNs modal
+function closeSearchingWSNs() {
+    document.getElementById("searchingWSNsModal").style.display = "none";
 }
 
 //get value of penWidth
@@ -279,6 +289,10 @@ function findXY(action, e) {
     if(toggleDraw == true) {
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
+        //change color of pen
+        ctx.fillStyle = "#0000FF";
+        //changes opacity of line
+        ctx.globalAlpha = 0.2;
 
         //if user mouse is down
         if(action == "down") {
@@ -295,8 +309,6 @@ function findXY(action, e) {
             if(dot_flag == true) {
                 //start drawing
                 ctx.beginPath();
-                //change color of nodes to black
-                ctx.fillStyle = "#000000";
                 ctx.fillRect(currX, currY, 1, 1);
                 //add starting point to json object
                 jsonDraw.draw.push({
@@ -330,6 +342,10 @@ function findXY(action, e) {
 function draw() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    //change color of pen
+    ctx.fillStyle = "#0000FF";
+    //changes opacity of line
+    ctx.globalAlpha = 0.2;
 
     //start drawing
     ctx.moveTo(prevX, prevY);
@@ -338,11 +354,10 @@ function draw() {
         "X" : currX,
         "Y" : currY
     });
-    //change color of nodes to black
-    ctx.fillStyle = "#000000";
     ctx.lineWidth = document.getElementById("penWidthSlider").value;
 	ctx.lineJoin = "round";
 	ctx.lineCap = "round";
+    ctx.strokeStyle = "#0000FF";
     ctx.stroke();
 }
 
@@ -428,7 +443,88 @@ function waitForResponseFromServer() {
     }
 }
 
+//displays a box with various info when Search WSNs is clicked
+function searchWSNs(mode) {    
+    //if mode = start then initiialize text field and populate array information
+    if(mode == "start") {
+        //rest current position of array that is displayed in text field
+        currTextFieldPos = 0;
+        //reset array
+        information = [];
+        
+        //displays modal/popup
+        document.getElementById("searchingWSNsModal").style.display="block";
+        
+        //code to get information and populate it
+        //HERE
+        
+        //pre-populate information with random data, for demonstration only, delete later
+        for(var i = 0; i < 25; i++) {
+            information[i] = i;
+        }
+        
+        //populate text field with the value at position in array 
+        document.getElementById("message").value = information[currTextFieldPos];
+    }
+    //if moving left in array
+    else if(mode == "left") {
+        //if current position of array that is displayed in text field is 0 then loop to end of array
+        if(currTextFieldPos == 0) {
+            //set current position to end of array
+            currTextFieldPos = 24;
+        }
+        //else if current position of array that is displayed in text field is not 0
+        else {
+            currTextFieldPos--;
+        }
+        //populate text field with the value at position in array 
+        document.getElementById("message").value = information[currTextFieldPos];
+    }
+    //if moving right in array
+    else if(mode == "right") {
+        //if current position of array that is displayed in text field is at end of array loop back to beginning of array (0)
+        if(currTextFieldPos == 24) {
+            //set current position to end of array
+            currTextFieldPos = 0;
+        }
+        //else if current position of array that is displayed in text field is not at end of array
+        else {
+            currTextFieldPos++;
+        }
+        //populate text field with the value at position in array 
+        document.getElementById("message").value = information[currTextFieldPos];
+    }
+}
 
+//when display current area button is pressed
+function displayCurrentArea() {
+    alert("displayCurrentArea function");
+}
+
+//when show all area button is pressed
+function showAllArea() {
+    alert("showAllArea function");
+}
+
+//when unknownOne button is pressed
+function unknownOne() {
+    alert("unknownOne function");
+}
+
+//when unkownTwo button is pressed
+function unknownTwo() {
+    alert("unknownTwo function");
+}
+
+//when unkownThree button is pressed
+function unknownThree() {
+    alert("unknownThree function");
+}
+
+//when unkownFour button is pressed
+function unknownFour() {
+    alert("unknownFour function");
+}
 
 function randomTest(){
   erase();
