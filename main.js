@@ -76,6 +76,11 @@ function closeSearchingWSNs() {
     document.getElementById("searchingWSNsModal").style.display = "none";
 }
 
+//closes search nodes modal
+function closeSearchNodes() {
+	document.getElementById("searchNodesModal").style.display = "none";
+}
+
 //get value of penWidth
 function penWidthGetValue() {
     document.getElementById("penWidthValue").innerHTML = document.getElementById("penWidthSlider").value;
@@ -524,6 +529,60 @@ function unknownThree() {
 //when unkownFour button is pressed
 function unknownFour() {
     alert("unknownFour function");
+}
+
+//opens search nodes modal and allows user to input node # to search for node
+function searchNodesPopup() {
+	//opens search node modal
+	document.getElementById("searchNodesModal").style.display = "block";
+	
+	//gets max number of nodes displayed from array
+	var maxNodes = nodesX.length - 1;
+	//message to be displayed inside modal
+	var message = "";
+	
+	//if maxNodes is 0 then that means there are no nodes displayed
+	if(maxNodes <= 0) {
+		message = "No nodes displayed";
+		document.getElementById("nodeNumber").disabled = true;
+		document.getElementById("searchButton").disabled = true;
+	}
+	//else there are nodes displayed
+	else {
+		message = "Please enter a number between 0 and " + maxNodes;
+		document.getElementById("nodeNumber").disabled = false;
+		document.getElementById("searchButton").disabled = false;
+	}
+	
+	//update the displayed message
+	document.getElementById("messageBox").innerHTML = message;
+	
+	//set focus onto textbox
+	document.getElementById("nodeNumber").focus();
+}
+
+//takes inputed number from search nodes modal to display node info
+function searchNodes() {
+	//get value from textbox
+	var input = document.getElementById("nodeNumber").value;
+	//get max # of nodes
+	var maxNodes = nodesX.length - 1;
+	//if input is less than 0 or greater than maxNodes-1 then it is out of bounds
+	if(input < 0 || input > maxNodes) {
+		document.getElementById("errorMessageBox").innerHTML = "Invalid range";
+	}
+	else {
+		//close search nodes modal
+		closeSearchNodes();
+		nodesX[input];
+		nodesY[input];
+		//open popup and set its position`
+        var popupBox = document.getElementById("popup");
+        popupBox.style.display = "block";
+        popupBox.style.top = nodesY[input];
+        popupBox.style.left = nodesX[input];
+        popupBox.innerHTML = "Node #: " + input + "<br />" + "X: " + nodesX[input] + "<br />" + "Y: " + nodesY[input];
+	}
 }
 
 function randomTest(){

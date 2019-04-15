@@ -45,6 +45,9 @@
                     <td>
                         <button type="button" onclick="searchWSNs('start')">Search WSNs</button>
                     </td>
+					<td>
+						<button type="button" onclick="searchNodesPopup()">Search Nodes</button>
+					</td>
                 </tr>
             </table>
         </div>
@@ -131,7 +134,7 @@
         </div>
     </div>
 	
-        <!-- div contains Modal, pop up box that opens when RoutingMSG button is clicked-->
+    <!-- div contains Modal, pop up box that opens when RoutingMSG button is clicked-->
     <div id="loadingBarModal" class="loadingBarModal">
         <div class="loadingBarModalContent">
             <div class="loadingBarModalContainer">
@@ -190,6 +193,20 @@
                     </tr>
                 </table>
                 
+            </div>
+        </div>
+    </div>
+	
+	<!-- div contains Modal, pop up box that allows user to search nodes-->
+    <div id="searchNodesModal" class="searchNodesModal">
+        <div class="searchNodesModalContent">
+            <div class="searchNodesModalContainer">
+                <!--x button at top left hand corner for closing modal-->
+                <span onclick="closeSearchNodes()" class="button displayTopRight">x</span>
+				<p id="messageBox">hi</p>
+				<input type="text" id="nodeNumber" />
+				<button type="button" id="searchButton" onclick="searchNodes()">Search</button>
+				<p id="errorMessageBox"></p>
             </div>
         </div>
     </div>
