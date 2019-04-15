@@ -345,25 +345,36 @@ function findXY(action, e) {
 
 //allows the user to draw on canvas
 function draw() {
+	//main canvas
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+	//secondary temp canvas
+	var canvas2 = document.createElement("canvas");
+	canvas2.width = canvas.width;
+	canvas2.height = canvas.height;
+	var ctx2 = canvas2.getContext("2d");
+	
     //change color of pen
-    ctx.fillStyle = "#0000FF";
+    ctx2.fillStyle = "#0000FF";
     //changes opacity of line
-    ctx.globalAlpha = 0.2;
+    ctx2.globalAlpha = 0.2;
+	ctx2.globalCompositeOperation="destination-atop";
 
-    //start drawing
-    ctx.moveTo(prevX, prevY);
-    ctx.lineTo(currX, currY);
+    //start drawing on temp canvas
+    ctx2.moveTo(prevX, prevY);
+    ctx2.lineTo(currX, currY);
     jsonDraw.draw.push({
         "X" : currX,
         "Y" : currY
     });
-    ctx.lineWidth = document.getElementById("penWidthSlider").value;
-	ctx.lineJoin = "round";
-	ctx.lineCap = "round";
-    ctx.strokeStyle = "#0000FF";
-    ctx.stroke();
+    ctx2.lineWidth = document.getElementById("penWidthSlider").value;
+	ctx2.lineJoin = "round";
+	ctx2.lineCap = "round";
+    ctx2.strokeStyle = "#0000FF";
+    ctx2.stroke();
+	
+	//draws image on top of main canvas
+	ctx.drawImage(canvas2, 0, 0);
 }
 
 //erases everything in canvas then places generated nodes back on canvas
@@ -618,6 +629,7 @@ function randomTest(){
   ctx.beginPath();
   ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
   ctx.stroke(); 
+  
   var i,j;
   var ccc=0;
   for(i=0;i<2000;i++)
