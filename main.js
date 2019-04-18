@@ -357,7 +357,7 @@ function draw() {
     //change color of pen
     ctx2.fillStyle = "#0000FF";
     //changes opacity of line
-    ctx2.globalAlpha = 0.2;
+    ctx2.globalAlpha = 0.6;
 	ctx2.globalCompositeOperation="destination-atop";
 
     //start drawing on temp canvas
@@ -381,7 +381,10 @@ function draw() {
 function erase() {
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
-    
+    //reset global alpha
+    ctx.globalAlpha = 1;
+    //reset global composite operation
+    ctx.globalCompositeOperation = "source-over";
     //clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //reset json object
@@ -618,18 +621,68 @@ function randomTest(){
     dis=(nodesX[c1]-nodesX[c2])*(nodesX[c1]-nodesX[c2])+(nodesY[c1]-nodesY[c2])*(nodesY[c1]-nodesY[c2]);
   }while(dis>(h1+h2)*(h1+h2)*d*d)
   console.log(c1+' '+c2+ ' ' +h1+' '+h2);
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
-  ctx.stroke(); 
-  ctx.beginPath();
-  ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
-  ctx.stroke(); 
-  ctx.beginPath();
-  ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
-  ctx.stroke(); 
-  
+
+
+    //start drawing
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    //draw first (free) circle
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "white";
+    ctx.stroke();
+    ctx.globalAlpha = 0.3;
+    ctx.fill();
+    //color intersection between first circle and second circle
+    ctx.beginPath();
+    ctx.globalAlpha = 0.1;
+    ctx.fillStyle = "red"
+    ctx.globalCompositeOperation = "source-atop";
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    //color intersection between first circle and third circle
+    ctx.beginPath()
+    ctx.globalAlpha = 0.6;
+    ctx.fillStyle = "white";
+    ctx.globalCompositeOperation = "source-atop";
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+    //draw second outer circle
+    ctx.beginPath();
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "white";
+    ctx.stroke(); 
+    ctx.globalAlpha = 0.0;
+    ctx.fill();
+    //draw third inner circle
+    ctx.beginPath();
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "white";
+    ctx.stroke();
+    ctx.globalAlpha = 0.0;
+    ctx.fill();
+    //reset global composite operation
+    ctx.globalCompositeOperation = "source-over";
+    //redraw strokes
+    ctx.beginPath();
+    ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
+    ctx.stroke();
+    
+    
   var i,j;
   var ccc=0;
   for(i=0;i<2000;i++)
