@@ -627,6 +627,7 @@ function randomTest(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     //draw first (free) circle
+    /*
     ctx.save();
     ctx.beginPath();
     ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
@@ -681,6 +682,8 @@ function randomTest(){
     ctx.beginPath();
     ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
     ctx.stroke();
+    */
+    
     
     
   var i,j;
@@ -690,8 +693,10 @@ function randomTest(){
     for(j=0;j<2000;j++)
     {
       if(pDis(i,j,nodesX[c2],nodesY[c2])<h2*h2*d*d && pDis(i,j,nodesX[c1],nodesY[c1])<h1*h1*d*d && pDis(i,j,nodesX[c1],nodesY[c1])>(h1-1)*(h1-1)*d*d)
+      {
         ccc+=1;
-      
+        if(i%4==0&&j%4==0)ctx.fillRect(i,j,1,1);
+      }
     }
   }
   
