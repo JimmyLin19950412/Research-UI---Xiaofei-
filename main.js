@@ -353,6 +353,7 @@ function draw() {
 	canvas2.width = canvas.width;
 	canvas2.height = canvas.height;
 	var ctx2 = canvas2.getContext("2d");
+	ctx2.globalCompositeOperation="xor";
 	
     //change color of pen
     ctx2.fillStyle = "#0000FF";
@@ -627,62 +628,17 @@ function randomTest(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     //draw first (free) circle
-    /*
-    ctx.save();
     ctx.beginPath();
     ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "white";
     ctx.stroke();
-    ctx.globalAlpha = 0.3;
-    ctx.fill();
-    //color intersection between first circle and second circle
-    ctx.beginPath();
-    ctx.globalAlpha = 0.1;
-    ctx.fillStyle = "red"
-    ctx.globalCompositeOperation = "source-atop";
-    ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
-    //color intersection between first circle and third circle
-    ctx.beginPath()
-    ctx.globalAlpha = 0.6;
-    ctx.fillStyle = "white";
-    ctx.globalCompositeOperation = "source-atop";
-    ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
     //draw second outer circle
     ctx.beginPath();
-    ctx.globalCompositeOperation = "destination-over";
     ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "white";
     ctx.stroke(); 
-    ctx.globalAlpha = 0.0;
-    ctx.fill();
     //draw third inner circle
     ctx.beginPath();
     ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
-    ctx.globalAlpha = 1;
-    ctx.fillStyle = "white";
     ctx.stroke();
-    ctx.globalAlpha = 0.0;
-    ctx.fill();
-    //reset global composite operation
-    ctx.globalCompositeOperation = "source-over";
-    //redraw strokes
-    ctx.beginPath();
-    ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(nodesX[c1], nodesY[c1], h1*d, 0, 2 * Math.PI);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(nodesX[c1], nodesY[c1], h1*d-d, 0, 2 * Math.PI);
-    ctx.stroke();
-    */
     
     
     
@@ -695,7 +651,10 @@ function randomTest(){
       if(pDis(i,j,nodesX[c2],nodesY[c2])<h2*h2*d*d && pDis(i,j,nodesX[c1],nodesY[c1])<h1*h1*d*d && pDis(i,j,nodesX[c1],nodesY[c1])>(h1-1)*(h1-1)*d*d)
       {
         ccc+=1;
-        if(i%4==0&&j%4==0)ctx.fillRect(i,j,1,1);
+        if(i%4==0&&j%4==0) {
+			ctx.fillStyle = "#FF0000";
+			ctx.fillRect(i,j,1,1);
+		}
       }
     }
   }
