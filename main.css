@@ -64,7 +64,7 @@
 
 .popup {
     height: 60px;
-    width: 90px;
+    width: 100px;
     border: 1px solid #000;
     position: absolute;
     display: none;
