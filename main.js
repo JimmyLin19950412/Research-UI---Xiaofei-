@@ -391,10 +391,11 @@ function erase() {
     var jsonDraw = {
         draw: []
     };
-    //place nodes back on canvas
-    placeNodesOnCanvas();
     //resets canvas images
     document.getElementById("canvasImage").src = "";
+    
+    //place nodes back on canvas
+    placeNodesOnCanvas();
 }
 
 //clears entire canvas
@@ -624,10 +625,11 @@ function randomTest(){
   }while(dis>(h1+h2)*(h1+h2)*d*d)
   console.log(c1+' '+c2+ ' ' +h1+' '+h2);
 
-
     //start drawing
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    //change opacity of canvas
+    canvas.style.opacity = 1;
     //draw first (free) circle
     ctx.beginPath();
     ctx.arc(nodesX[c2], nodesY[c2], h2*d, 0, 2 * Math.PI);
@@ -659,8 +661,13 @@ function randomTest(){
       }
     }
   }
-  
-  console.log(ccc);
+    //makes current canvas drawing into an image and changes source of image tag
+    document.getElementById("canvasImage").src = canvas.toDataURL();
+    
+    //changes opacity of canvas
+    canvas.style.opacity = 0.25;
+    
+    console.log(ccc);
 }
 
 function pDis(x1,y1,x2,y2)
