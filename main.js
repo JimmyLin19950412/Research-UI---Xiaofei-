@@ -215,7 +215,10 @@ function placeNodesOnCanvas() {
     var canvas = document.getElementById("canvas");
     //canvas is 2d
     var ctx = canvas.getContext("2d");
-
+    
+    //change opacity of canvas
+    canvas.style.opacity = 1;
+    
     //loops through length of nodesX and nodesY array
     for(var i = 0; i < nodesX.length; i++) {
         //if current node is an anchor node
@@ -237,6 +240,12 @@ function placeNodesOnCanvas() {
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
+       
+        //makes current canvas drawing into an image and changes source of image tag
+        document.getElementById("canvasImage").src = canvas.toDataURL();
+        
+        //changes opacity of canvas
+        canvas.style.opacity = 0.25;
     }
 }
 
@@ -348,34 +357,24 @@ function draw() {
 	//main canvas
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-	//secondary temp canvas
-	var canvas2 = document.createElement("canvas");
-	canvas2.width = canvas.width;
-	canvas2.height = canvas.height;
-	var ctx2 = canvas2.getContext("2d");
-	ctx2.globalCompositeOperation="xor";
 	
     //change color of pen
-    ctx2.fillStyle = "#0000FF";
+    ctx.fillStyle = "#0000FF";
     //changes opacity of line
-    ctx2.globalAlpha = 0.6;
-	ctx2.globalCompositeOperation="destination-atop";
+    ctx.globalAlpha = 0.6;
 
     //start drawing on temp canvas
-    ctx2.moveTo(prevX, prevY);
-    ctx2.lineTo(currX, currY);
+    ctx.moveTo(prevX, prevY);
+    ctx.lineTo(currX, currY);
     jsonDraw.draw.push({
         "X" : currX,
         "Y" : currY
     });
-    ctx2.lineWidth = document.getElementById("penWidthSlider").value;
-	ctx2.lineJoin = "round";
-	ctx2.lineCap = "round";
-    ctx2.strokeStyle = "#0000FF";
-    ctx2.stroke();
-	
-	//draws image on top of main canvas
-	ctx.drawImage(canvas2, 0, 0);
+    ctx.lineWidth = document.getElementById("penWidthSlider").value;
+	ctx.lineJoin = "round";
+	ctx.lineCap = "round";
+    ctx.strokeStyle = "#0000FF";
+    ctx.stroke();
 }
 
 //erases everything in canvas then places generated nodes back on canvas
@@ -394,6 +393,8 @@ function erase() {
     };
     //place nodes back on canvas
     placeNodesOnCanvas();
+    //resets canvas images
+    document.getElementById("canvasImage").src = "";
 }
 
 //clears entire canvas

@@ -51,8 +51,9 @@
                 </tr>
             </table>
         </div>
-        <div class="main">
-            <canvas id="canvas" style="border:0.5px solid #000000;margin-top:3%" >
+        <div class="main" style="position: relative;">
+            <img src="" id="canvasImage" style="position: absolute; z-order: 1;margin-top:3%" />
+            <canvas id="canvas" style="border:0.5px solid #000000;margin-top:3%;position:absolute;z-order:2;opacity:0.25;" >
                 Your browser does not support canvas.
             </canvas>
         </div>
