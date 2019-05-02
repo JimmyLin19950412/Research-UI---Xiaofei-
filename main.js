@@ -303,8 +303,7 @@ function findXY(action, e) {
     if(toggleDraw == true) {
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
-        //change color of pen
-        ctx.fillStyle = "#0000FF";
+
         //changes opacity of line
         ctx.globalAlpha = 0.2;
 
@@ -357,9 +356,7 @@ function draw() {
 	//main canvas
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-	
-    //change color of pen
-    ctx.fillStyle = "#0000FF";
+
     //changes opacity of line
     ctx.globalAlpha = 0.6;
 
@@ -373,7 +370,7 @@ function draw() {
     ctx.lineWidth = document.getElementById("penWidthSlider").value;
 	ctx.lineJoin = "round";
 	ctx.lineCap = "round";
-    ctx.strokeStyle = "#0000FF";
+    ctx.strokeStyle = document.getElementById("color").value;
     ctx.stroke();
 }
 
