@@ -628,6 +628,7 @@ function randomTest(){
     //start drawing
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#000000";
     //change opacity of canvas
     canvas.style.opacity = 1;
     //draw first (free) circle
